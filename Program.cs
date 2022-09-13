@@ -10,8 +10,7 @@ namespace Spiel
     {
         public static int Spieler = 0;
         public static int Computer = 0;
-        //static string[] Auswahl = { "Schere", "Stein", "Papier" };
-
+        
         public static string Dice()
         {
             Random rnd = new Random();
@@ -21,38 +20,118 @@ namespace Spiel
             return CompDes;
         }
 
+        public static void Starter()
+        {
+            bool Stopper = true;
+            while (Stopper == true)
+            {
+                WriteLine(" ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                WriteLine("Schere, Stein, Papier?");
+                WriteLine(" ");
+                Console.ForegroundColor = ConsoleColor.White;
+                string Wahl = ReadLine();
+
+                string Wuerfel = Dice();
+
+                if (Wahl == Wuerfel)
+                {
+                    
+                    Zero();
+                    Zaehler();
+                    Stopper = Zaehler();
+                }
+                else if (Wahl == "Schere" && Wuerfel == "Papier")
+                {
+                    
+                    StandSp();
+                    Zaehler();
+                    Stopper = Zaehler();
+                }
+                else if (Wahl == "Schere" && Wuerfel == "Stein")
+                {
+                   
+                    StandCp();
+                    Zaehler();
+                    Stopper = Zaehler();
+
+                }
+                else if (Wahl == "Papier" && Wuerfel == "Stein")
+                {
+                    
+                    StandSp();
+                    Zaehler();
+                    Stopper = Zaehler();
+
+                }
+                else if (Wahl == "Papier" && Wuerfel == "Schere")
+                {
+                   
+                    StandCp();
+                    Zaehler();
+                    Stopper = Zaehler();
+
+                }
+                else if (Wahl == "Stein" && Wuerfel == "Schere")
+                {
+                    
+                    StandSp();
+                    Zaehler();
+                    Stopper = Zaehler();
+                }
+                else if (Wahl == "Stein" && Wuerfel == "Papier")
+                {
+                    
+                    StandCp();
+                    Zaehler();
+                    Stopper = Zaehler();
+                }
+                else
+                {
+                    WriteLine("kek");
+                }
+            }
+        }
+
+
         public static int StandSp()
         {
+            string Wuerfel = Dice();
             Console.ForegroundColor = ConsoleColor.White;
-            WriteLine(Dice());
+            WriteLine(Wuerfel);
             Console.ForegroundColor = ConsoleColor.Green;
             WriteLine("Du hast gewonnen!");
             WriteLine(" ");
             Console.ForegroundColor = ConsoleColor.White;
-            Spieler += 1;                                        //Ununterbrochener Zähler?
-            WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");
+            Spieler += 1;   
+            
+            //WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");    //Problem
+            //WriteLine("Stand: Spieler " + StandSp() + "- Computer " + StandCp());
             return Spieler;
         }
+
         public static int StandCp()
         {
+            string Wuerfel = Dice();
             Console.ForegroundColor = ConsoleColor.White;
-            WriteLine(Dice());
+            WriteLine(Wuerfel);
             Console.ForegroundColor = ConsoleColor.Red;
             WriteLine("Du hast verloren!");
             WriteLine(" ");
             Console.ForegroundColor = ConsoleColor.White;
             Computer += 1;
-            WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");
-            return StandCp();
+            //WriteLine("Stand: Spieler "+StandSp() + "- Computer " +StandCp()); //Problem
+            return Computer;
         }
+
         public static bool Zaehler()
         {
-            if (StandSp() == 5)
+            if (Spieler == 5)
             {
                 WriteLine("Spieler hat gewonnen");
                 return false;
             }
-            else if (StandCp() == 5)
+            else if (Computer == 5)
             {
                 WriteLine("Computer hat gewonnen");
                 return false;
@@ -64,139 +143,16 @@ namespace Spiel
         }
         public static void Zero()
         {
+            string Wuerfel = Dice();
             Console.ForegroundColor = ConsoleColor.White;
-            WriteLine(Dice());
+            WriteLine(Wuerfel);
             Console.ForegroundColor = ConsoleColor.Yellow;
             WriteLine("Unentschieden");
             WriteLine(" ");
             Console.ForegroundColor = ConsoleColor.White;
-            WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");
+            //WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");
         }
-        public static void Starter()
-        {
-            while (Zaehler() == true)
-            {
-                WriteLine(" ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                WriteLine("Schere, Stein, Papier?");
-                WriteLine(" ");
-                Console.ForegroundColor = ConsoleColor.White;
-                string Wahl = ReadLine();
 
-
-                if (Wahl == Dice())
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Auswahl[Dice]);
-                    //Console.ForegroundColor = ConsoleColor.Yellow;
-                    //WriteLine("Unentschieden");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 0;
-                    //StandCp = StandCp + 0;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    Zero();
-                    Zaehler();
-                }
-                else if (Wahl == "Schere" && Dice() == "Papier")
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Auswahl[Dice]);
-                    //Console.ForegroundColor = ConsoleColor.Green;
-                    //WriteLine("Du hast gewonnen!");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 1;
-                    //StandCp = StandCp + 0;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    StandSp();
-                    Zaehler();
-                }
-                else if (Wahl == "Schere" && Dice() == "Stein")
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Auswahl[Dice]);
-                    //Console.ForegroundColor = ConsoleColor.Red;
-                    //WriteLine("Du hast verloren!");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 0;
-                    //StandCp = StandCp + 1;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    StandCp();
-                    Zaehler();
-
-                }
-                else if (Wahl == "Papier" && Dice() == "Stein")
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Dice());
-                    //Console.ForegroundColor = ConsoleColor.Green;
-                    //WriteLine("Du hast gewonnen!");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 1;
-                    //StandCp = StandCp + 0;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    StandSp();
-                    Zaehler();
-
-                }
-                else if (Wahl == "Papier" && Dice() == "Schere")
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Auswahl[Dice]);
-                    //Console.ForegroundColor = ConsoleColor.Red;
-                    //WriteLine("Du hast verloren!");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 0;
-                    //StandCp = StandCp + 1;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    StandCp();
-                    Zaehler();
-
-                }
-                else if (Wahl == "Stein" && Dice() == "Schere")
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Auswahl[Dice]);
-                    //Console.ForegroundColor = ConsoleColor.Green;
-                    //WriteLine("Du hast gewonnen!");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 1;
-                    //StandCp = StandCp + 0;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    StandSp();
-                    Zaehler();
-
-                }
-                else if (Wahl == "Stein" && Dice() == "Papier")
-                {
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //WriteLine(Auswahl[Dice]);
-                    //Console.ForegroundColor = ConsoleColor.Red;
-                    //WriteLine("Du hast verloren!");
-                    //WriteLine(" ");
-                    //Console.ForegroundColor = ConsoleColor.White;
-                    //StandSp = StandSp + 0;
-                    //StandCp = StandCp + 1;
-                    //WriteLine($"Stand: Spieler {StandSp} - Computer {StandCp}");
-                    StandCp();
-                    Zaehler();
-
-                }
-                else
-                {
-                    WriteLine("kek");
-                }
-            }
-
-
-
-
-        }
     }
 }
 
