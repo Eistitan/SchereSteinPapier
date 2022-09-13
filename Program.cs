@@ -105,8 +105,8 @@ namespace Spiel
             Console.ForegroundColor = ConsoleColor.White;
             Spieler += 1;   
             
-            //WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");    //Problem
-            //WriteLine("Stand: Spieler " + StandSp() + "- Computer " + StandCp());
+            WriteLine($"Stand: Spieler {Spieler} - Computer {Computer}");   
+          
             return Spieler;
         }
 
@@ -120,7 +120,7 @@ namespace Spiel
             WriteLine(" ");
             Console.ForegroundColor = ConsoleColor.White;
             Computer += 1;
-            //WriteLine("Stand: Spieler "+StandSp() + "- Computer " +StandCp()); //Problem
+            WriteLine("Stand: Spieler "+ Spieler + " - Computer " +Computer); 
             return Computer;
         }
 
@@ -150,7 +150,7 @@ namespace Spiel
             WriteLine("Unentschieden");
             WriteLine(" ");
             Console.ForegroundColor = ConsoleColor.White;
-            //WriteLine($"Stand: Spieler {StandSp()} - Computer {StandCp()}");
+            WriteLine($"Stand: Spieler {Spieler} - Computer {Computer}");
         }
 
     }
