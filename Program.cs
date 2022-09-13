@@ -8,9 +8,12 @@ namespace Spiel
 {
     public static class SSP
     {
-        public static int Spieler = 0;
-        public static int Computer = 0;
-        
+        static int Spieler = 0;
+        static int Computer = 0;
+        static bool Stopper = true;
+        static string Wahl;
+        static string Wuerfel;
+
         public static string Dice()
         {
             Random rnd = new Random();
@@ -19,108 +22,103 @@ namespace Spiel
             string CompDes = Auswahl[Dice];
             return CompDes;
         }
-
+        public static void output(string status ="remis")
+        {
+            switch(status)
+            {
+                case "start":
+                    WriteLine(" ");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    WriteLine("Schere, Stein, Papier?");
+                    WriteLine(" ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case "win":
+                    Console.ForegroundColor = ConsoleColor.White;
+                    WriteLine(Wuerfel);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    WriteLine("Du hast gewonnen!");
+                    WriteLine(" ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case "lose":
+                    Console.ForegroundColor = ConsoleColor.White;
+                    WriteLine(Wuerfel);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    WriteLine("Du hast verloren!");
+                    WriteLine(" ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case "remis":
+                    Console.ForegroundColor = ConsoleColor.White;
+                    WriteLine(Wuerfel);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    WriteLine("Unentschieden");
+                    WriteLine(" ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case "-":
+                    WriteLine("kek");
+                    break;
+            }
+            if (status != "start")
+            {
+                WriteLine("");
+                WriteLine($"Stand: Spieler {Spieler} - Computer {Computer}");
+            }
+        }
         public static void Starter()
         {
-            bool Stopper = true;
+            
             while (Stopper == true)
             {
-                WriteLine(" ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                WriteLine("Schere, Stein, Papier?");
-                WriteLine(" ");
-                Console.ForegroundColor = ConsoleColor.White;
-                string Wahl = ReadLine();
+                output("start");
 
-                string Wuerfel = Dice();
+                Wahl = ReadLine();
+                if (Wahl != "Stein" || Wahl!="Schere"||Wahl!="Papier")
+                {
+                    output("-");
+                    Environment.Exit(0);
+                }
+
+                Wuerfel = Dice();
 
                 if (Wahl == Wuerfel)
                 {
-                    
                     Zero();
-                    Zaehler();
-                    Stopper = Zaehler();
                 }
-                else if (Wahl == "Schere" && Wuerfel == "Papier")
+                else if (Wahl == "Schere" && Wuerfel == "Papier" || Wahl == "Papier" && Wuerfel == "Stein" || Wahl == "Stein" && Wuerfel == "Schere")
                 {
                     
                     StandSp();
-                    Zaehler();
-                    Stopper = Zaehler();
+                    
                 }
-                else if (Wahl == "Schere" && Wuerfel == "Stein")
+                else 
                 {
                    
                     StandCp();
-                    Zaehler();
-                    Stopper = Zaehler();
-
-                }
-                else if (Wahl == "Papier" && Wuerfel == "Stein")
-                {
                     
-                    StandSp();
-                    Zaehler();
+                }
+                
                     Stopper = Zaehler();
-
-                }
-                else if (Wahl == "Papier" && Wuerfel == "Schere")
-                {
-                   
-                    StandCp();
-                    Zaehler();
-                    Stopper = Zaehler();
-
-                }
-                else if (Wahl == "Stein" && Wuerfel == "Schere")
-                {
-                    
-                    StandSp();
-                    Zaehler();
-                    Stopper = Zaehler();
-                }
-                else if (Wahl == "Stein" && Wuerfel == "Papier")
-                {
-                    
-                    StandCp();
-                    Zaehler();
-                    Stopper = Zaehler();
-                }
-                else
-                {
-                    WriteLine("kek");
-                }
+                
             }
         }
 
 
         public static int StandSp()
         {
-            string Wuerfel = Dice();
-            Console.ForegroundColor = ConsoleColor.White;
-            WriteLine(Wuerfel);
-            Console.ForegroundColor = ConsoleColor.Green;
-            WriteLine("Du hast gewonnen!");
-            WriteLine(" ");
-            Console.ForegroundColor = ConsoleColor.White;
-            Spieler += 1;   
-            
-            WriteLine($"Stand: Spieler {Spieler} - Computer {Computer}");   
+            Spieler += 1;
+            output("win");         
           
             return Spieler;
         }
 
         public static int StandCp()
         {
-            string Wuerfel = Dice();
-            Console.ForegroundColor = ConsoleColor.White;
-            WriteLine(Wuerfel);
-            Console.ForegroundColor = ConsoleColor.Red;
-            WriteLine("Du hast verloren!");
-            WriteLine(" ");
-            Console.ForegroundColor = ConsoleColor.White;
             Computer += 1;
-            WriteLine("Stand: Spieler "+ Spieler + " - Computer " +Computer); 
+            output("lose");
+
             return Computer;
         }
 
@@ -128,12 +126,16 @@ namespace Spiel
         {
             if (Spieler == 5)
             {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 WriteLine("Spieler hat gewonnen");
+                Console.ForegroundColor = ConsoleColor.White;
                 return false;
             }
             else if (Computer == 5)
             {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta; 
                 WriteLine("Computer hat gewonnen");
+                Console.ForegroundColor = ConsoleColor.White;
                 return false;
             }
             else
@@ -143,14 +145,7 @@ namespace Spiel
         }
         public static void Zero()
         {
-            string Wuerfel = Dice();
-            Console.ForegroundColor = ConsoleColor.White;
-            WriteLine(Wuerfel);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            WriteLine("Unentschieden");
-            WriteLine(" ");
-            Console.ForegroundColor = ConsoleColor.White;
-            WriteLine($"Stand: Spieler {Spieler} - Computer {Computer}");
+            output();
         }
 
     }
